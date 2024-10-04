@@ -13,11 +13,14 @@ export const metadata: Metadata = {
   description: "The Twitter application for Github community.",
 };
 
+type LayoutProps = {
+  children: React.ReactNode,
+  modal?: React.ReactNode
+}
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+  modal
+}: LayoutProps) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body className={clsx(inter.className, "bg-background h-full")}>
@@ -29,6 +32,7 @@ export default function RootLayout({
             </div>
             <Footer />
           </div>
+          {modal}
         </ThemeProvider>
       </body>
     </html>
