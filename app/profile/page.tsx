@@ -2,7 +2,6 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { getAuthSession } from "@/lib/auth";
 import { Post } from "@/src/features/post/Post";
 import { getUserProfile } from "@/src/query/user.query"
-import { followUser } from "../users/[userId]/follow.action";
 import Profile from "@/app/users/[userId]/Profile";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -11,12 +10,12 @@ import Link from "next/link";
 export default async function ProfilePage() {
   const session = await getAuthSession();
   if (!session?.user.id) {
-    notFound();
+    throw new Error("User not authenticated");
   }
   const user = await getUserProfile(session?.user.id);
 
   if (!user) {
-    notFound();
+    throw new Error("User profile not found");
   }
   return (
     <div className="">
