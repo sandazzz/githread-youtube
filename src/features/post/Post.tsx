@@ -1,8 +1,8 @@
-import { Button, buttonVariants } from "@/components/ui/button";
 import { PostHome } from "@/src/query/post.query";
-import { Heart, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { PostLayout } from "./PostLayout";
+import LikeButton from "./LikeButton";
 
 type PostProps = {
   post: PostHome;
@@ -15,24 +15,25 @@ export const Post = ({ post }: PostProps) => {
         {post.content}
       </Link>
       <div className="flex gap-2 items-center">
-        <Button size="icon" variant="ghost">
-          <Heart size={20} />
-        </Button>
-        <Button size="icon" variant="ghost">
+        {<LikeButton postId={post.id} isLiked={post.likes.length > 0} />}
+        <Link
+          href={`/post/${post.id}/reply`}
+          className="rounded-md hover:bg-accent flex gap-1 items-center"
+        >
           <MessageCircle size={20} />
-        </Button>
+        </Link>
       </div>
       <div>
         <Link
           className="text-muted-foreground text-sm"
-          href={`/posts/${post.id}`}
+          href={`/post/${post.id}`}
         >
           {post._count.likes} likes
         </Link>
         {" ‧ "}
         <Link
           className="text-muted-foreground text-sm"
-          href={`/posts/${post.id}`}
+          href={`/post/${post.id}`}
         >
           {post._count.replies} comments
         </Link>
